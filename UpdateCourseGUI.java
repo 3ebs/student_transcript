@@ -1,3 +1,10 @@
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import static java.sql.JDBCType.NULL;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,8 +20,16 @@ public class UpdateCourseGUI extends javax.swing.JFrame {
     /**
      * Creates new form UpdateCourseGUI
      */
+    public Connection conn;
     public UpdateCourseGUI() {
         initComponents();
+         try {
+            String myDriver = "com.mysql.jdbc.Driver";
+            Class.forName(myDriver);
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false", "root", "yaya88");
+        } catch (Exception ex) {
+            System.out.println("Something went wrong while accessing database");
+        }
     }
 
     /**
@@ -27,84 +42,86 @@ public class UpdateCourseGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea4 = new javax.swing.JTextArea();
+        UpdateCourseName = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTextArea5 = new javax.swing.JTextArea();
+        UpdateCourseDuration = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        oldCourseID = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        newCourseID = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        DoneUpdateCourse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea4.setColumns(20);
-        jTextArea4.setRows(5);
-        jScrollPane4.setViewportView(jTextArea4);
+        UpdateCourseName.setColumns(20);
+        UpdateCourseName.setRows(5);
+        jScrollPane4.setViewportView(UpdateCourseName);
 
-        jLabel1.setText("Course name");
+        jLabel1.setText("New CourseID*");
 
-        jLabel4.setText("Department Name");
+        jLabel4.setText("New Course Duration");
 
         jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea5.setColumns(20);
-        jTextArea5.setRows(5);
-        jScrollPane5.setViewportView(jTextArea5);
+        UpdateCourseDuration.setColumns(20);
+        UpdateCourseDuration.setRows(5);
+        jScrollPane5.setViewportView(UpdateCourseDuration);
 
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        oldCourseID.setColumns(20);
+        oldCourseID.setRows(5);
+        jScrollPane2.setViewportView(oldCourseID);
 
-        jLabel2.setText("Course ID*");
+        jLabel2.setText("Old CourseID*");
 
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
+        newCourseID.setColumns(20);
+        newCourseID.setRows(5);
+        jScrollPane3.setViewportView(newCourseID);
 
-        jLabel3.setText("Duration In Hours");
+        jLabel3.setText("New Course Name");
 
-        jButton1.setText("done");
+        DoneUpdateCourse.setText("done");
+        DoneUpdateCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DoneUpdateCourseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(45, 45, 45))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                            .addComponent(jScrollPane4)
+                            .addComponent(jScrollPane2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(DoneUpdateCourse)))
                 .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
@@ -127,12 +144,50 @@ public class UpdateCourseGUI extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(26, 26, 26)
-                .addComponent(jButton1)
+                .addComponent(DoneUpdateCourse)
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void DoneUpdateCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoneUpdateCourseActionPerformed
+        // TODO add your handling code here:
+        String OldCourseID = oldCourseID.getText();
+        int oldID = Integer.parseInt(OldCourseID);
+        String NewID = newCourseID.getText();
+        int newID = Integer.parseInt(NewID);
+        String newName = UpdateCourseName.getText();
+        String newDuration = UpdateCourseDuration.getText();
+        String query;
+        if(newName.equals("")&& newDuration.equals(""))
+        {
+           query = "UPDATE course SET ID = "+ newID + " WHERE ID =" + oldID ; 
+        }
+        else if(newName.equals(""))
+        {
+           int newdInHours = Integer.parseInt(newDuration);
+           query = "UPDATE course SET ID = "+ newID + ","+"DurationInHours ="+newdInHours+" WHERE ID =" + oldID ;
+        }
+        else if(newDuration.equals(""))
+        {
+            query = "UPDATE course SET ID = "+ newID + ","+"name ="+"\'"+newName + "\'" +" WHERE ID =" + oldID ;
+        }
+        else
+        {
+            int newdInHours = Integer.parseInt(newDuration);
+            query = "UPDATE course SET ID = "+ newID + ","+"name ="+"\'"+newName + "\'"+","+"durationInHours ="+ newdInHours+" WHERE ID =" + oldID ;
+        }
+        try 
+        {
+            PreparedStatement preparedStmt = conn.prepareStatement(query);//must
+            preparedStmt.executeUpdate(query);
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Error updating into Course table!");
+        }
+    }//GEN-LAST:event_DoneUpdateCourseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,7 +225,9 @@ public class UpdateCourseGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton DoneUpdateCourse;
+    private javax.swing.JTextArea UpdateCourseDuration;
+    private javax.swing.JTextArea UpdateCourseName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -179,9 +236,7 @@ public class UpdateCourseGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextArea jTextArea4;
-    private javax.swing.JTextArea jTextArea5;
+    private javax.swing.JTextArea newCourseID;
+    private javax.swing.JTextArea oldCourseID;
     // End of variables declaration//GEN-END:variables
 }

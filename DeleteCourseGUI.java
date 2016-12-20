@@ -1,3 +1,9 @@
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,8 +19,16 @@ public class DeleteCourseGUI extends javax.swing.JFrame {
     /**
      * Creates new form DeleteCourseGUI
      */
+    public static Connection conn;
     public DeleteCourseGUI() {
         initComponents();
+        try {
+            String myDriver = "com.mysql.jdbc.Driver";
+            Class.forName(myDriver);
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false", "root", "yaya88");
+        } catch (Exception ex) {
+            System.out.println("Something went wrong while accessing database");
+        }
     }
 
     /**
@@ -28,10 +42,10 @@ public class DeleteCourseGUI extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        DeleteCourseID = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        DeleteCourseName = new javax.swing.JTextArea();
         DeleteCourse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -41,18 +55,18 @@ public class DeleteCourseGUI extends javax.swing.JFrame {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        DeleteCourseID.setColumns(20);
+        DeleteCourseID.setRows(5);
+        jScrollPane1.setViewportView(DeleteCourseID);
 
         jLabel2.setText("Course Name");
 
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        DeleteCourseName.setColumns(20);
+        DeleteCourseName.setRows(5);
+        jScrollPane2.setViewportView(DeleteCourseName);
 
         DeleteCourse.setText("Done");
         DeleteCourse.addActionListener(new java.awt.event.ActionListener() {
@@ -103,6 +117,32 @@ public class DeleteCourseGUI extends javax.swing.JFrame {
 
     private void DeleteCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteCourseActionPerformed
         // TODO add your handling code here:
+        String CourseID = DeleteCourseID.getText();
+        String name = DeleteCourseName.getText();
+        String query;
+        if(name.equals(""))
+        {
+           int ID = Integer.parseInt(CourseID);
+           query = "DELETE FROM course WHERE ID = "+ ID  ; 
+        }
+        else if(CourseID.equals(""))
+        {
+           query = "DELETE FROM course WHERE name = " + "\'"+name + "\'";
+        }
+        else 
+        {
+            int ID = Integer.parseInt(CourseID);
+            query = "DELETE FROM course WHERE name = "+ "\'"+name + "\'" + "and ID = " +ID ;
+        }
+        try 
+        {
+            PreparedStatement preparedStmt = conn.prepareStatement(query);//must
+            preparedStmt.executeUpdate(query);
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Error deleting from Course table!");
+        }
     }//GEN-LAST:event_DeleteCourseActionPerformed
 
     /**
@@ -142,11 +182,11 @@ public class DeleteCourseGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton DeleteCourse;
+    private javax.swing.JTextArea DeleteCourseID;
+    private javax.swing.JTextArea DeleteCourseName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 }
