@@ -1,3 +1,9 @@
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,8 +19,17 @@ public class DeleteDepGUI extends javax.swing.JFrame {
     /**
      * Creates new form DeleteDepGUI
      */
+    public Connection conn;
     public DeleteDepGUI() {
         initComponents();
+        try{
+            String myDriver="com.mysql.jdbc.Driver";
+            Class.forName(myDriver);
+            conn= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false","root","id1292312");
+        }
+        catch(Exception ex){
+            System.out.println("Something went wrong while accesseing database");
+        }
     }
 
     /**
@@ -26,23 +41,28 @@ public class DeleteDepGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        deleteDep = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        deleteDepName = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Delete");
+        deleteDep.setText("Delete");
+        deleteDep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteDepActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Department Name:");
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        deleteDepName.setColumns(20);
+        deleteDepName.setRows(5);
+        jScrollPane1.setViewportView(deleteDepName);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -50,7 +70,7 @@ public class DeleteDepGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(deleteDep)
                 .addGap(52, 52, 52))
             .addGroup(layout.createSequentialGroup()
                 .addGap(54, 54, 54)
@@ -67,12 +87,29 @@ public class DeleteDepGUI extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(deleteDep)
                 .addGap(55, 55, 55))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void deleteDepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteDepActionPerformed
+
+        // TODO add your handling code here:
+        String DepName = deleteDepName.getText();
+        String query = "DELETE FROM department  WHERE name = "+"\'"+DepName+"\'" ; // btktby el query zy ma btktbeha fel cmd 3ady 
+        try 
+        {
+            // el satren dol lazem yktbo zy ma homa w yt7to f try & catch 
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.executeUpdate(query);
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Error deleting from Department table!");
+        }
+    }//GEN-LAST:event_deleteDepActionPerformed
 
     /**
      * @param args the command line arguments
@@ -110,9 +147,9 @@ public class DeleteDepGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton deleteDep;
+    private javax.swing.JTextArea deleteDepName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
