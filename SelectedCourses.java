@@ -33,7 +33,7 @@ public class SelectedCourses extends javax.swing.JFrame {
             System.out.println("Something went wrong while accessing database");
         }
         Selectedcourses.setText(res);
-        Selectedcourses.append(res);
+        //Selectedcourses.append(res);
     }
 
     /**
