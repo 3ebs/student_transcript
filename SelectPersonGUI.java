@@ -1,3 +1,11 @@
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,16 +16,29 @@
  *
  * @author yousef
  */
-public class SelectGUI extends javax.swing.JFrame {
+public class SelectPersonGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form SelectGUI
      */
-    public SelectGUI() {
+    private Connection conn;
+    private PreparedStatement preparedStmt;  
+    public SelectPersonGUI() {
         initComponents();
+        ResultText.setEditable(false);
         setLocation(600, 300);
         setVisible(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        try
+        {
+            String myDriver = "com.mysql.jdbc.Driver";
+            Class.forName(myDriver);
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Transcript?autoReconnect=true&useSSL=false", "root", "u1234q-a-z");
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage() + "Error connecting to database!");
+        }
     }
 
     /**
@@ -29,21 +50,161 @@ public class SelectGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ResultText = new javax.swing.JTextArea();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        list = new javax.swing.JList<>();
+        processSelectPerson = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Result"));
+
+        ResultText.setColumns(20);
+        ResultText.setRows(1);
+        jScrollPane1.setViewportView(ResultText);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(357, 357, 357))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Choose option"));
+
+        list.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Count students", "Count professors" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        list.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                listPropertyChange(evt);
+            }
+        });
+        list.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(list);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        processSelectPerson.setText("Process");
+        processSelectPerson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                processSelectPersonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(processSelectPerson)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(processSelectPerson)
+                .addGap(11, 11, 11))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void listValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listValueChanged
+        // TODO add your handling code here:
+        ResultText.setText("");
+    }//GEN-LAST:event_listValueChanged
+
+    private void listPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_listPropertyChange
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_listPropertyChange
+
+    private void processSelectPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processSelectPersonActionPerformed
+        // TODO add your handling code here:
+        String selection = list.getSelectedValue();
+        String query;
+        Statement st;
+        ResultSet rs;
+        int count = 0;
+        try
+        {
+            switch(selection)
+            {
+                case "Count students":
+                    query = "SELECT COUNT(*) FROM student";
+                    preparedStmt = conn.prepareStatement(query);
+                    st = conn.createStatement();
+                    rs = st.executeQuery(query);
+                    while(rs.next())
+                    {
+                        count = rs.getInt(1);
+                    }
+                    ResultText.setText("Number of students is " + Integer.toString(count));
+                    break;
+                case "Count professors":
+                    query = "SELECT COUNT(*) FROM professor";
+                    preparedStmt = conn.prepareStatement(query);
+                    st = conn.createStatement();
+                    rs = st.executeQuery(query);
+                    while(rs.next())
+                    {
+                        count = rs.getInt(1);
+                    }
+                    ResultText.setText("Number of professors is " + Integer.toString(count));
+                    break;
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e.getMessage() + " Error querying from database!");
+        }
+    }//GEN-LAST:event_processSelectPersonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -62,24 +223,32 @@ public class SelectGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SelectGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectPersonGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SelectGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectPersonGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SelectGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectPersonGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SelectGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SelectPersonGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SelectGUI().setVisible(true);
+                new SelectPersonGUI().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea ResultText;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> list;
+    private javax.swing.JButton processSelectPerson;
     // End of variables declaration//GEN-END:variables
 }

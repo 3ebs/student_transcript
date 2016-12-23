@@ -1,3 +1,7 @@
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,8 +17,13 @@ public class MainGUI extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
+    
     public MainGUI() {
         initComponents();
+        insertButton.setEnabled(false);
+        deleteButton.setEnabled(false);
+        updateButton.setEnabled(false);
+        selectButton.setEnabled(false);
     }
 
     /**
@@ -28,28 +37,29 @@ public class MainGUI extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList = new javax.swing.JList<>();
+        tableList = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         insertButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
         selectButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Choose table"));
 
-        jList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Student", "Professor", "Course", "Department", "Teach", "Take", "Telephone" };
+        tableList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Person", "Student", "Professor", "Course", "Department", "Teach", "Take", "Telephone" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        tableList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jListValueChanged(evt);
+                tableListValueChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(jList);
+        jScrollPane1.setViewportView(tableList);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -64,8 +74,8 @@ public class MainGUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Choose action"));
@@ -104,15 +114,11 @@ public class MainGUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(deleteButton)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(updateButton)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(insertButton)
-                                .addComponent(selectButton))
-                            .addGap(3, 3, 3))))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(insertButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(updateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(selectButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -126,55 +132,117 @@ public class MainGUI extends javax.swing.JFrame {
                 .addComponent(updateButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(selectButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
+
+        jButton1.setText("Show transcript");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(27, 27, 27)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(130, 130, 130))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListValueChanged
+    private void tableListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_tableListValueChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_jListValueChanged
+        String selection = tableList.getSelectedValue();
+        switch(selection)
+        {
+            case "Person":
+                insertButton.setEnabled(false);
+                deleteButton.setEnabled(false);
+                updateButton.setEnabled(false);
+                selectButton.setEnabled(true);
+                break;
+            case "Student":
+                insertButton.setEnabled(true);
+                deleteButton.setEnabled(true);
+                updateButton.setEnabled(true);
+                selectButton.setEnabled(false);
+                break;
+            case "Professor":
+                insertButton.setEnabled(true);
+                deleteButton.setEnabled(true);
+                updateButton.setEnabled(true);
+                selectButton.setEnabled(false);
+                break;
+            case "Take":
+                insertButton.setEnabled(false);
+                deleteButton.setEnabled(false);
+                updateButton.setEnabled(false);
+                selectButton.setEnabled(false);
+                break;
+            case "Teach":
+                insertButton.setEnabled(false);
+                deleteButton.setEnabled(false);
+                updateButton.setEnabled(false);
+                selectButton.setEnabled(false);
+                break;
+            case "Department":
+                insertButton.setEnabled(true);
+                deleteButton.setEnabled(true);
+                updateButton.setEnabled(true);
+                selectButton.setEnabled(true);
+                break;
+            case "Course":
+                insertButton.setEnabled(true);
+                deleteButton.setEnabled(true);
+                updateButton.setEnabled(true);
+                selectButton.setEnabled(true);
+                break;
+            case "Telephone":
+                insertButton.setEnabled(false);
+                deleteButton.setEnabled(false);
+                updateButton.setEnabled(false);
+                selectButton.setEnabled(false);
+                break;
+        }
+    }//GEN-LAST:event_tableListValueChanged
 
     private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertButtonActionPerformed
         // TODO add your handling code here:
-        InsertPersonGUI insertGui = new InsertPersonGUI();
+        String selected = tableList.getSelectedValue();
+        InsertPersonGUI insertGui = new InsertPersonGUI(selected);
     }//GEN-LAST:event_insertButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
-        DeleteGUI deleteGui = new DeleteGUI();
+        DeletePersonGUI deleteGui = new DeletePersonGUI();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
-        UpdateGUI updateGui = new UpdateGUI();
+        String selected = tableList.getSelectedValue();
+        UpdatePersonGUI updateGui = new UpdatePersonGUI(selected);
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         // TODO add your handling code here:
-        SelectGUI selectGui = new SelectGUI();
+        SelectPersonGUI selectGui = new SelectPersonGUI();
     }//GEN-LAST:event_selectButtonActionPerformed
     
     /**
@@ -216,11 +284,12 @@ public class MainGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton insertButton;
-    private javax.swing.JList<String> jList;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton selectButton;
+    private javax.swing.JList<String> tableList;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,3 +1,10 @@
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,8 +20,50 @@ public class InsertPersonGUI extends javax.swing.JFrame {
     /**
      * Creates new form InsertPersonGUI
      */
-    public InsertPersonGUI() {
+    private boolean Sflag;
+    private boolean Pflag;
+    private Connection conn;
+    private PreparedStatement preparedStmt;          
+
+    public InsertPersonGUI(String s) {
         initComponents();
+        Sflag = false;
+        Pflag = false;
+        setLocation(600, 300);
+        setVisible(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        if(s.equals("Student")) 
+        {
+            Sflag = true;
+            phd.setVisible(false);
+            PhDText.setVisible(false);
+            OfficeHours.setVisible(false);
+            OfficeText.setVisible(false);
+            RoomNo.setVisible(false);
+            RoomText.setVisible(false);
+        }
+        else if(s.equals("Professor")) 
+        {
+            Pflag = true;
+            AccGPAText.setVisible(false);
+            AccGPA.setVisible(false);
+            EDate.setVisible(false);
+            EDateText.setVisible(false);
+            GDText.setVisible(false);
+            GDate.setVisible(false);
+            DNText.setVisible(false);
+            DName.setVisible(false);
+        }
+        try
+        {
+            String myDriver = "com.mysql.jdbc.Driver";
+            Class.forName(myDriver);
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Transcript?autoReconnect=true&useSSL=false", "root", "u1234q-a-z");
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage() + "Error connecting to database!");
+        }
     }
 
     /**
@@ -26,179 +75,186 @@ public class InsertPersonGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        PersonID = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel2 = new javax.swing.JLabel();
+        PersonIDText = new javax.swing.JTextArea();
+        PersonName = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jLabel3 = new javax.swing.JLabel();
+        PersonNameText = new javax.swing.JTextArea();
+        BirthDate = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
-        jLabel4 = new javax.swing.JLabel();
+        BirthDateText = new javax.swing.JTextArea();
+        Addr = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea4 = new javax.swing.JTextArea();
-        jLabel5 = new javax.swing.JLabel();
+        AddrText = new javax.swing.JTextArea();
+        email = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTextArea5 = new javax.swing.JTextArea();
-        jLabel6 = new javax.swing.JLabel();
+        EmailText = new javax.swing.JTextArea();
+        uni = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTextArea6 = new javax.swing.JTextArea();
-        jLabel7 = new javax.swing.JLabel();
+        UniText = new javax.swing.JTextArea();
+        Faculty = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTextArea7 = new javax.swing.JTextArea();
+        FacultyText = new javax.swing.JTextArea();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jTextArea9 = new javax.swing.JTextArea();
-        jLabel9 = new javax.swing.JLabel();
+        AccGPAText = new javax.swing.JTextArea();
+        EDate = new javax.swing.JLabel();
         jScrollPane10 = new javax.swing.JScrollPane();
-        jTextArea10 = new javax.swing.JTextArea();
-        jLabel10 = new javax.swing.JLabel();
+        EDateText = new javax.swing.JTextArea();
+        GDate = new javax.swing.JLabel();
         jScrollPane11 = new javax.swing.JScrollPane();
-        jTextArea11 = new javax.swing.JTextArea();
-        jLabel11 = new javax.swing.JLabel();
+        GDText = new javax.swing.JTextArea();
+        DName = new javax.swing.JLabel();
         jScrollPane12 = new javax.swing.JScrollPane();
-        jTextArea12 = new javax.swing.JTextArea();
-        jLabel12 = new javax.swing.JLabel();
+        DNText = new javax.swing.JTextArea();
+        phd = new javax.swing.JLabel();
         jScrollPane13 = new javax.swing.JScrollPane();
-        jTextArea13 = new javax.swing.JTextArea();
-        jLabel13 = new javax.swing.JLabel();
+        PhDText = new javax.swing.JTextArea();
+        OfficeHours = new javax.swing.JLabel();
         jScrollPane14 = new javax.swing.JScrollPane();
-        jTextArea14 = new javax.swing.JTextArea();
-        jLabel14 = new javax.swing.JLabel();
+        OfficeText = new javax.swing.JTextArea();
+        RoomNo = new javax.swing.JLabel();
         jScrollPane15 = new javax.swing.JScrollPane();
-        jTextArea15 = new javax.swing.JTextArea();
-        jLabel15 = new javax.swing.JLabel();
+        RoomText = new javax.swing.JTextArea();
+        AccGPA = new javax.swing.JLabel();
         doneInsertPerson = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setSize(new java.awt.Dimension(874, 423));
 
-        jLabel1.setText("Person ID");
+        PersonID.setText("Person ID*");
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        PersonIDText.setColumns(20);
+        PersonIDText.setRows(5);
+        jScrollPane1.setViewportView(PersonIDText);
 
-        jLabel2.setText("Person name");
+        PersonName.setText("Person name*");
 
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        PersonNameText.setColumns(20);
+        PersonNameText.setRows(5);
+        jScrollPane2.setViewportView(PersonNameText);
 
-        jLabel3.setText("Birth date");
+        BirthDate.setText("Birth date*");
 
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
+        BirthDateText.setColumns(20);
+        BirthDateText.setRows(5);
+        jScrollPane3.setViewportView(BirthDateText);
 
-        jLabel4.setText("Address");
+        Addr.setText("Address*");
 
         jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea4.setColumns(20);
-        jTextArea4.setRows(5);
-        jScrollPane4.setViewportView(jTextArea4);
+        AddrText.setColumns(20);
+        AddrText.setRows(5);
+        jScrollPane4.setViewportView(AddrText);
 
-        jLabel5.setText("Email");
+        email.setText("Email*");
 
         jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea5.setColumns(20);
-        jTextArea5.setRows(5);
-        jScrollPane5.setViewportView(jTextArea5);
+        EmailText.setColumns(20);
+        EmailText.setRows(5);
+        jScrollPane5.setViewportView(EmailText);
 
-        jLabel6.setText("University");
+        uni.setText("University*");
 
         jScrollPane6.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane6.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea6.setColumns(20);
-        jTextArea6.setRows(5);
-        jScrollPane6.setViewportView(jTextArea6);
+        UniText.setColumns(20);
+        UniText.setRows(5);
+        jScrollPane6.setViewportView(UniText);
 
-        jLabel7.setText("Faculty");
+        Faculty.setText("Faculty*");
 
         jScrollPane7.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane7.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea7.setColumns(20);
-        jTextArea7.setRows(5);
-        jScrollPane7.setViewportView(jTextArea7);
+        FacultyText.setColumns(20);
+        FacultyText.setRows(5);
+        jScrollPane7.setViewportView(FacultyText);
 
         jScrollPane9.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane9.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea9.setColumns(20);
-        jTextArea9.setRows(5);
-        jScrollPane9.setViewportView(jTextArea9);
+        AccGPAText.setColumns(20);
+        AccGPAText.setRows(5);
+        jScrollPane9.setViewportView(AccGPAText);
 
-        jLabel9.setText("Enrollment date");
+        EDate.setText("Enrollment date*");
 
         jScrollPane10.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane10.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea10.setColumns(20);
-        jTextArea10.setRows(5);
-        jScrollPane10.setViewportView(jTextArea10);
+        EDateText.setColumns(20);
+        EDateText.setRows(5);
+        jScrollPane10.setViewportView(EDateText);
 
-        jLabel10.setText("Graduation date");
+        GDate.setText("Graduation date*");
 
         jScrollPane11.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane11.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea11.setColumns(20);
-        jTextArea11.setRows(5);
-        jScrollPane11.setViewportView(jTextArea11);
+        GDText.setColumns(20);
+        GDText.setRows(5);
+        jScrollPane11.setViewportView(GDText);
 
-        jLabel11.setText("Department name");
+        DName.setText("Department name*");
 
         jScrollPane12.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane12.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea12.setColumns(20);
-        jTextArea12.setRows(5);
-        jScrollPane12.setViewportView(jTextArea12);
+        DNText.setColumns(20);
+        DNText.setRows(5);
+        jScrollPane12.setViewportView(DNText);
 
-        jLabel12.setText("PhD");
+        phd.setText("PhD*");
 
         jScrollPane13.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane13.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea13.setColumns(20);
-        jTextArea13.setRows(5);
-        jScrollPane13.setViewportView(jTextArea13);
+        PhDText.setColumns(20);
+        PhDText.setRows(5);
+        jScrollPane13.setViewportView(PhDText);
 
-        jLabel13.setText("Office hours");
+        OfficeHours.setText("Office hours*");
 
         jScrollPane14.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane14.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea14.setColumns(20);
-        jTextArea14.setRows(5);
-        jScrollPane14.setViewportView(jTextArea14);
+        OfficeText.setColumns(20);
+        OfficeText.setRows(5);
+        jScrollPane14.setViewportView(OfficeText);
 
-        jLabel14.setText("Room number");
+        RoomNo.setText("Room number*");
 
         jScrollPane15.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane15.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea15.setColumns(20);
-        jTextArea15.setRows(5);
-        jScrollPane15.setViewportView(jTextArea15);
+        RoomText.setColumns(20);
+        RoomText.setRows(5);
+        jScrollPane15.setViewportView(RoomText);
 
-        jLabel15.setText("Accumlated GPA");
+        AccGPA.setText("Accumlated GPA*");
 
         doneInsertPerson.setText("Done");
+        doneInsertPerson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doneInsertPersonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -207,13 +263,13 @@ public class InsertPersonGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel2))
+                    .addComponent(uni)
+                    .addComponent(email)
+                    .addComponent(Addr)
+                    .addComponent(BirthDate)
+                    .addComponent(PersonID)
+                    .addComponent(Faculty)
+                    .addComponent(PersonName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -223,34 +279,34 @@ public class InsertPersonGUI extends javax.swing.JFrame {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel11)
+                        .addComponent(DName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel10)
+                        .addComponent(GDate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel9)
+                        .addComponent(EDate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel15)
+                        .addComponent(AccGPA)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel14)
+                        .addComponent(RoomNo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel12)
+                        .addComponent(phd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel13)
+                        .addComponent(OfficeHours)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(61, 61, 61))
@@ -267,59 +323,59 @@ public class InsertPersonGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(phd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(OfficeHours, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(RoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(AccGPA, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(EDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(GDate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(DName, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(PersonID, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(PersonName, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(BirthDate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Addr, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(uni, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(Faculty, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(doneInsertPerson, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                 .addGap(20, 20, 20))
@@ -327,6 +383,74 @@ public class InsertPersonGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void doneInsertPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneInsertPersonActionPerformed
+        // TODO add your handling code here:
+        String ID = PersonIDText.getText(), name = PersonNameText.getText(), birthdate = BirthDateText.getText(), 
+               address = AddrText.getText(), email = EmailText.getText(), university = UniText.getText(), 
+                faculty = FacultyText.getText();
+        String accGPA, enrollmentDate, graduationDate, departmentName, phd, officehours, roomNo;
+        String query;
+        try
+            {
+                query = "INSERT INTO person VALUES (" + 
+                        + Integer.parseInt(ID) + "," + 
+                        "\'" + name + "\'" + "," +
+                        "\'" + birthdate + "\'" + "," +
+                        "\'" + address + "\'" + "," +
+                        "\'" + email + "\'" + "," +
+                        "\'" + university + "\'" + "," +
+                        "\'" + faculty + "\'" + ")";
+                preparedStmt = conn.prepareStatement(query);
+                preparedStmt.executeUpdate(query);
+            }
+        catch(SQLException e)
+        {
+            System.out.println("Error inserting into Person table!");
+        }
+        if(Sflag)
+        {
+            accGPA = AccGPAText.getText(); enrollmentDate = EDateText.getText(); graduationDate = GDText.getText();
+            departmentName = DNText.getText();
+            try
+            {
+                query = "INSERT INTO student VALUES (" + 
+                        + Integer.parseInt(ID) + "," + 
+                        + Float.parseFloat(accGPA) + "," +
+                        "\'" + enrollmentDate + "\'" + "," +
+                        "\'" + graduationDate + "\'" + "," +
+                        "\'" + departmentName + "\'" + ")";
+                preparedStmt = conn.prepareStatement(query);
+                preparedStmt.executeUpdate(query);
+                Success s = new Success();
+            }
+            catch(SQLException e)
+            {
+                System.out.println("Error inserting into Student table!");
+                Failure f = new Failure();
+            }
+        }
+        else if(Pflag)
+        {
+            phd = PhDText.getText(); officehours = OfficeText.getText(); roomNo = RoomText.getText();
+            try
+            {
+                query = "INSERT INTO professor VALUES (" + 
+                        + Integer.parseInt(ID) + "," + 
+                        "\'" + phd + "\'" + "," +
+                        "\'" + officehours + "\'" + "," +
+                        + Integer.parseInt(roomNo) + ")";
+                preparedStmt = conn.prepareStatement(query);
+                preparedStmt.executeUpdate(query);
+                Success s = new Success();
+            }
+            catch(SQLException e)
+            {
+                System.out.println("Error inserting into Professor table!");
+                Failure f = new Failure();
+            }
+        }
+    }//GEN-LAST:event_doneInsertPersonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -358,27 +482,39 @@ public class InsertPersonGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InsertPersonGUI().setVisible(true);
+                new InsertPersonGUI("").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AccGPA;
+    private javax.swing.JTextArea AccGPAText;
+    private javax.swing.JLabel Addr;
+    private javax.swing.JTextArea AddrText;
+    private javax.swing.JLabel BirthDate;
+    private javax.swing.JTextArea BirthDateText;
+    private javax.swing.JTextArea DNText;
+    private javax.swing.JLabel DName;
+    private javax.swing.JLabel EDate;
+    private javax.swing.JTextArea EDateText;
+    private javax.swing.JTextArea EmailText;
+    private javax.swing.JLabel Faculty;
+    private javax.swing.JTextArea FacultyText;
+    private javax.swing.JTextArea GDText;
+    private javax.swing.JLabel GDate;
+    private javax.swing.JLabel OfficeHours;
+    private javax.swing.JTextArea OfficeText;
+    private javax.swing.JLabel PersonID;
+    private javax.swing.JTextArea PersonIDText;
+    private javax.swing.JLabel PersonName;
+    private javax.swing.JTextArea PersonNameText;
+    private javax.swing.JTextArea PhDText;
+    private javax.swing.JLabel RoomNo;
+    private javax.swing.JTextArea RoomText;
+    private javax.swing.JTextArea UniText;
     private javax.swing.JButton doneInsertPerson;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel email;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
@@ -393,19 +529,7 @@ public class InsertPersonGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea10;
-    private javax.swing.JTextArea jTextArea11;
-    private javax.swing.JTextArea jTextArea12;
-    private javax.swing.JTextArea jTextArea13;
-    private javax.swing.JTextArea jTextArea14;
-    private javax.swing.JTextArea jTextArea15;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextArea jTextArea4;
-    private javax.swing.JTextArea jTextArea5;
-    private javax.swing.JTextArea jTextArea6;
-    private javax.swing.JTextArea jTextArea7;
-    private javax.swing.JTextArea jTextArea9;
+    private javax.swing.JLabel phd;
+    private javax.swing.JLabel uni;
     // End of variables declaration//GEN-END:variables
 }
