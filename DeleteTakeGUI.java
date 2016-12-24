@@ -1,3 +1,9 @@
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,8 +19,18 @@ public class DeleteTakeGUI extends javax.swing.JFrame {
     /**
      * Creates new form DeleteTakeGUI
      */
+    public Connection conn;
     public DeleteTakeGUI() {
         initComponents();
+            try{
+            String myDriver="com.mysql.jdbc.Driver";
+            Class.forName(myDriver);
+            conn= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false","root","id1292312");
+        }
+        catch(Exception ex){
+            System.out.println("Something went wrong while accesseing database");
+        }
+    
     }
 
     /**
@@ -29,10 +45,10 @@ public class DeleteTakeGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        deletePersonID = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        deleteCourseID = new javax.swing.JTextArea();
+        DeleteTake = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,18 +59,23 @@ public class DeleteTakeGUI extends javax.swing.JFrame {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        deletePersonID.setColumns(20);
+        deletePersonID.setRows(5);
+        jScrollPane1.setViewportView(deletePersonID);
 
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        deleteCourseID.setColumns(20);
+        deleteCourseID.setRows(5);
+        jScrollPane2.setViewportView(deleteCourseID);
 
-        jButton1.setText("Delete");
+        DeleteTake.setText("Delete");
+        DeleteTake.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteTakeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,7 +83,7 @@ public class DeleteTakeGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(DeleteTake)
                 .addGap(45, 45, 45))
             .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
@@ -89,12 +110,31 @@ public class DeleteTakeGUI extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
-                .addComponent(jButton1)
+                .addComponent(DeleteTake)
                 .addGap(53, 53, 53))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void DeleteTakeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteTakeActionPerformed
+        // TODO add your handling code here:
+        String courseid = deleteCourseID.getText();
+        int courseID = Integer.parseInt(courseid);
+        String personid = deletePersonID.getText();
+        int personID = Integer.parseInt(personid);
+        String query = "DELETE FROM take  WHERE courseID = "+courseID+" AND personID = "  +   personID ; // btktby el query zy ma btktbeha fel cmd 3ady 
+        try 
+        {
+            // el satren dol lazem yktbo zy ma homa w yt7to f try & catch 
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.executeUpdate(query);
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Error deleting from Take table!");
+        }
+    }//GEN-LAST:event_DeleteTakeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,12 +172,12 @@ public class DeleteTakeGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton DeleteTake;
+    private javax.swing.JTextArea deleteCourseID;
+    private javax.swing.JTextArea deletePersonID;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 }
