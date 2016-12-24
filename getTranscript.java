@@ -2,9 +2,6 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -27,7 +24,7 @@ public class getTranscript extends javax.swing.JFrame {
         try {
             String myDriver = "com.mysql.jdbc.Driver";
             Class.forName(myDriver);
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false", "root", "id1292312");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false", "root", "yaya88");
         } catch (Exception ex) {
             System.out.println("Something went wrong while accessing database");
         }
@@ -99,19 +96,7 @@ public class getTranscript extends javax.swing.JFrame {
         String s = enteredStudentID.getText();
         int id  = Integer.parseInt(s);
         TTranscript t = new TTranscript(id);
-        /*try {
-            query = "SELECT name FROM person WHERE ID = " + id ;
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            if (rs.next())
-                res = rs.getString("name");
-            
-            returnManager.setText(res);
-        }
-        catch (Exception ex) {
-            System.out.println("Something went wrong while accessing database");
-        }*/
+        
     }//GEN-LAST:event_viewTranscriptActionPerformed
 
     /**
