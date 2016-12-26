@@ -25,7 +25,18 @@ public class TTranscript extends javax.swing.JFrame {
      */
     public static Connection conn;
     public TTranscript(int studentID) {
-         initComponents();
+        initComponents();
+        studentName.setEditable(false);
+        studentAddress.setEditable(false);
+        studentBirthdate.setEditable(false);
+        studentDep.setEditable(false);
+        studentEnrol.setEditable(false);
+        studentEmail.setEditable(false);
+        studentFaculty.setEditable(false);
+        studentGrad.setEditable(false);
+        studentUni.setEditable(false);
+        studentaccGPA.setEditable(false);
+        
         setLocation(300, 100);
         setVisible(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

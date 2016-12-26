@@ -25,10 +25,13 @@ public class SelectFromCourse extends javax.swing.JFrame {
     public static Connection  conn;
     public SelectFromCourse() {
         initComponents();
+        setLocation(100, 100);
+        setVisible(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         try {
             String myDriver = "com.mysql.jdbc.Driver";
             Class.forName(myDriver);
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false", "root", "id1292312");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false", "root", "yaya88");
         } catch (Exception ex) {
             System.out.println("Something went wrong while accessing database");
         }

@@ -31,7 +31,7 @@ public class UpdatePersonGUI extends javax.swing.JFrame {
     
     public UpdatePersonGUI(String s) {
         initComponents();
-        setLocation(600, 300);
+        setLocation(100, 100);
         setVisible(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         if(s.equals("Student")) 
@@ -60,7 +60,7 @@ public class UpdatePersonGUI extends javax.swing.JFrame {
         {
             String myDriver = "com.mysql.jdbc.Driver";
             Class.forName(myDriver);
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Transcript?autoReconnect=true&useSSL=false", "root", "u1234q-a-z");
+        conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false", "root", "yaya88");
         }
         catch(Exception e)
         {

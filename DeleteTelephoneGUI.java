@@ -22,10 +22,13 @@ public class DeleteTelephoneGUI extends javax.swing.JFrame {
     public Connection conn;
     public DeleteTelephoneGUI() {
         initComponents();
+        setLocation(100, 100);
+        setVisible(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         try{
             String myDriver="com.mysql.jdbc.Driver";
             Class.forName(myDriver);
-            conn= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false","root","id1292312");
+            conn= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false","root","yaya88");
         }
         catch(Exception ex){
             System.out.println("Something went wrong while accesseing database");
@@ -105,10 +108,12 @@ public class DeleteTelephoneGUI extends javax.swing.JFrame {
             // el satren dol lazem yktbo zy ma homa w yt7to f try & catch 
             PreparedStatement preparedStmt = conn.prepareStatement(query);
             preparedStmt.executeUpdate(query);
+            Success s = new Success();
         }
         catch(SQLException e)
         {
-            System.out.println("Error deleting from Telephone table!");
+            //System.out.println("Error deleting from Telephone table!");
+            Failure f = new Failure();
         }
     }//GEN-LAST:event_doneDeleteTeleActionPerformed
 

@@ -17,6 +17,25 @@ public class MainGUI extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
+    InsertPersonGUI insertGui;
+    InsertCourseGUI insertCourse;
+    InsertDepGUI insertDep;
+    InsertTeachGUI insertTeach;
+    InsertTakeGUI insertTake;
+    InsertTelephoneGUI insertTele;
+    Failure f;
+    DeletePersonGUI deleteGui;
+    DeleteCourseGUI delCourse;
+    DeleteTeachGUI delTeach;
+    DeleteTelephoneGUI delTele;
+    DeleteDepGUI delDep;
+    UpdatePersonGUI updateGui;
+    UpdateCourseGUI upCourse;
+    UpdateDepGUI upDep;
+    UpdateTelephoneGUI upTele;
+    SelectFromCourse selCourse;
+    SelectManagerName selName;
+
     
     public MainGUI() {
         initComponents();
@@ -50,7 +69,7 @@ public class MainGUI extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Choose table"));
 
         tableList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Person", "Student", "Professor", "Course", "Department", "Teach", "Take", "Telephone" };
+            String[] strings = { "Student", "Professor", "Course", "Department", "Teach", "Take", "Telephone" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -136,6 +155,11 @@ public class MainGUI extends javax.swing.JFrame {
         );
 
         jButton1.setText("Show transcript");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,12 +196,6 @@ public class MainGUI extends javax.swing.JFrame {
         String selection = tableList.getSelectedValue();
         switch(selection)
         {
-            case "Person":
-                insertButton.setEnabled(false);
-                deleteButton.setEnabled(false);
-                updateButton.setEnabled(false);
-                selectButton.setEnabled(true);
-                break;
             case "Student":
                 insertButton.setEnabled(true);
                 deleteButton.setEnabled(true);
@@ -191,14 +209,14 @@ public class MainGUI extends javax.swing.JFrame {
                 selectButton.setEnabled(false);
                 break;
             case "Take":
-                insertButton.setEnabled(false);
+                insertButton.setEnabled(true);
                 deleteButton.setEnabled(false);
                 updateButton.setEnabled(false);
                 selectButton.setEnabled(false);
                 break;
             case "Teach":
-                insertButton.setEnabled(false);
-                deleteButton.setEnabled(false);
+                insertButton.setEnabled(true);
+                deleteButton.setEnabled(true);
                 updateButton.setEnabled(false);
                 selectButton.setEnabled(false);
                 break;
@@ -215,9 +233,9 @@ public class MainGUI extends javax.swing.JFrame {
                 selectButton.setEnabled(true);
                 break;
             case "Telephone":
-                insertButton.setEnabled(false);
-                deleteButton.setEnabled(false);
-                updateButton.setEnabled(false);
+                insertButton.setEnabled(true);
+                deleteButton.setEnabled(true);
+                updateButton.setEnabled(true);
                 selectButton.setEnabled(false);
                 break;
         }
@@ -226,24 +244,70 @@ public class MainGUI extends javax.swing.JFrame {
     private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertButtonActionPerformed
         // TODO add your handling code here:
         String selected = tableList.getSelectedValue();
-        InsertPersonGUI insertGui = new InsertPersonGUI(selected);
+        if (selected.equals("Student")||selected.equals("Professor"))
+            insertGui = new InsertPersonGUI(selected);
+        else if (selected.equals("Course"))
+            insertCourse = new InsertCourseGUI();
+        else if (selected.equals("Department"))
+            insertDep = new InsertDepGUI();
+        else if (selected.equals("Teach"))
+            insertTeach = new InsertTeachGUI();
+        else if (selected.equals("Take"))
+            insertTake = new InsertTakeGUI();
+        else if (selected.equals("Telephone"))
+            insertTele = new InsertTelephoneGUI();
+        else
+            f = new Failure();
+
     }//GEN-LAST:event_insertButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
-        DeletePersonGUI deleteGui = new DeletePersonGUI();
+        String selected = tableList.getSelectedValue();
+        if (selected.equals("Student")||selected.equals("Professor"))
+            deleteGui = new DeletePersonGUI();
+        else if (selected.equals("Course"))
+            delCourse = new DeleteCourseGUI();
+        else if (selected.equals("Department"))
+            delDep = new DeleteDepGUI();
+        else if (selected.equals("Teach"))
+            delTeach = new DeleteTeachGUI();
+        else if (selected.equals("Telephone"))
+            delTele = new DeleteTelephoneGUI();
+        else
+            f = new Failure();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
-        String selected = tableList.getSelectedValue();
-        UpdatePersonGUI updateGui = new UpdatePersonGUI(selected);
+        String selected = tableList.getSelectedValue();  
+        if (selected.equals("Student")||selected.equals("Professor"))
+            updateGui = new UpdatePersonGUI(selected);
+        else if (selected.equals("Course"))
+            upCourse = new UpdateCourseGUI();
+        else if (selected.equals("Department"))
+            upDep = new UpdateDepGUI();
+        else if (selected.equals("Telephone"))
+            upTele = new UpdateTelephoneGUI();
+        else
+            f = new Failure();
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         // TODO add your handling code here:
-        SelectPersonGUI selectGui = new SelectPersonGUI();
+        String selected = tableList.getSelectedValue();
+        if (selected.equals("Course"))
+            selCourse = new SelectFromCourse();
+        else if (selected.equals("Department"))
+            selName = new SelectManagerName();
+        else
+            f = new Failure();
     }//GEN-LAST:event_selectButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        getTranscript t = new getTranscript();
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     /**
      * @param args the command line arguments

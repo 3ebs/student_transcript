@@ -21,6 +21,9 @@ public class getTranscript extends javax.swing.JFrame {
     public static Connection conn;
     public getTranscript() {
         initComponents();
+        setLocation(100, 100);
+        setVisible(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         try {
             String myDriver = "com.mysql.jdbc.Driver";
             Class.forName(myDriver);

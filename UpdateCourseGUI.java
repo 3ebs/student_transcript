@@ -23,6 +23,9 @@ public class UpdateCourseGUI extends javax.swing.JFrame {
     public Connection conn;
     public UpdateCourseGUI() {
         initComponents();
+        setLocation(100, 100);
+        setVisible(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
          try {
             String myDriver = "com.mysql.jdbc.Driver";
             Class.forName(myDriver);
@@ -182,10 +185,12 @@ public class UpdateCourseGUI extends javax.swing.JFrame {
         {
             PreparedStatement preparedStmt = conn.prepareStatement(query);//must
             preparedStmt.executeUpdate(query);
+            Success s = new Success();
         }
         catch(SQLException e)
         {
-            System.out.println("Error updating into Course table!");
+            //System.out.println("Error updating into Course table!");
+            Failure f = new Failure();
         }
     }//GEN-LAST:event_DoneUpdateCourseActionPerformed
 

@@ -26,6 +26,9 @@ public class InsertCourseGUI extends javax.swing.JFrame {
     public  Connection conn;
     public InsertCourseGUI() {
         initComponents();
+        setLocation(100, 100);
+        setVisible(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         try {
             String myDriver = "com.mysql.jdbc.Driver";
             Class.forName(myDriver);
@@ -176,10 +179,12 @@ public class InsertCourseGUI extends javax.swing.JFrame {
             PreparedStatement preparedStmt = conn.prepareStatement(query);//must
             //Statement st = conn.createStatement();//must
             preparedStmt.executeUpdate(query);
+            Success s = new Success();
         }
         catch(SQLException e)
         {
-            System.out.println("Error inserting into Course table!");
+            Failure f = new Failure();
+            //System.out.println("Error inserting into Course table!");
         }
     }//GEN-LAST:event_DoneInsertingCourseActionPerformed
 

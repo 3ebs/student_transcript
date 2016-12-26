@@ -22,10 +22,13 @@ public class InsertDepGUI extends javax.swing.JFrame {
     public Connection conn;
     public InsertDepGUI() {
         initComponents();
+        setLocation(100, 100);
+        setVisible(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         try{
             String myDriver="com.mysql.jdbc.Driver";
             Class.forName(myDriver);
-            conn= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false","root","id1292312");
+            conn= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false","root","yaya88");
         }
         catch(Exception ex){
             System.out.println("Something went wrong while accesseing database");
@@ -117,19 +120,21 @@ public class InsertDepGUI extends javax.swing.JFrame {
 
     private void DoneInsertingDepartmentActionPerformedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoneInsertingDepartmentActionPerformedActionPerformed
         // TODO add your handling code here:
-        String managerID = insertManagerID.getText();
-        int manageID = Integer.parseInt(managerID);
+        String managerID1 = insertManagerID.getText();
+        int manageID = Integer.parseInt(managerID1);
         String DepName = insertDepName.getText();
-        String query = "INSERT INTO department  VALUES ( " + "\'"+DepName+"\'"  + ","  + managerID + ")" ; // btktby el query zy ma btktbeha fel cmd 3ady 
+        String query = "INSERT INTO department  VALUES ( " + "\'"+DepName+"\'"  + ","  + manageID + ")" ; // btktby el query zy ma btktbeha fel cmd 3ady 
         try 
         {
             // el satren dol lazem yktbo zy ma homa w yt7to f try & catch 
             PreparedStatement preparedStmt = conn.prepareStatement(query);
             preparedStmt.executeUpdate(query);
+            Success s = new Success();
         }
         catch(SQLException e)
         {
-            System.out.println("Error inserting into Department table!");
+            Failure f = new Failure();
+            //System.out.println("Error inserting into Department table!");
         }
     }//GEN-LAST:event_DoneInsertingDepartmentActionPerformedActionPerformed
 
