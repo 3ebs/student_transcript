@@ -31,7 +31,7 @@ public class SelectFromCourse extends javax.swing.JFrame {
         try {
             String myDriver = "com.mysql.jdbc.Driver";
             Class.forName(myDriver);
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/transcript?autoReconnect=true&useSSL=false", "root", "yaya88");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/Transcript?autoReconnect=true&useSSL=false", "root", "u1234q-a-z");
         } catch (Exception ex) {
             System.out.println("Something went wrong while accessing database");
         }
